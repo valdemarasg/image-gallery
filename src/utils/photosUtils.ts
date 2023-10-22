@@ -1,4 +1,4 @@
-import { Photo, Author } from '../types';
+import { Photo } from '../types';
 
 //removes items from newPhotos if it exists in photos array
 export const checkForDuplicates = (photos: Photo[], newPhotos: Photo[]): Photo[] => {
@@ -9,15 +9,16 @@ export const checkForDuplicates = (photos: Photo[], newPhotos: Photo[]): Photo[]
             uniquePhotos.push(photoItem);
         }
     });
+
     return uniquePhotos;
 }
 
 
-//returns new autho=r ids from latestPhotos if it dont exist in authorDetails array
-export const checkForNewAuthors = (authorDetails: Author[], latestPhotos: Photo[]): string[] => {
+//returns new author ids from latestPhotos if it dont exist in authorIds array
+export const checkForNewAuthors = (authorIds: string[], latestPhotos: Photo[]): string[] => {
     const newAuthors: string[] = [];
     latestPhotos.forEach(photoItem => {
-        if (!authorDetails.find(item => item.id === photoItem.owner)) {
+        if (!authorIds.find(item => item === photoItem.owner)) {
             newAuthors.push(photoItem.owner);
         }
     });

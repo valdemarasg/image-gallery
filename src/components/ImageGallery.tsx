@@ -8,17 +8,17 @@ export const ImageGallery = () => {
 
   const [page, setPage] = useState(1);
   const { photos, loading, latestPhotos } = useGetImages(page);
-  const { authorDetails } = useGetAuthors(latestPhotos)
-
-  const handleScroll = () => {
-    const currHeight = window.innerHeight + document.documentElement.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight;
-    if (currHeight + 100 >= scrollHeight && !loading) {
-      setPage(prev => prev + 1)
-    }
-  };
+  const { authorDetails } = useGetAuthors(latestPhotos, photos)
 
   useEffect(() => {
+    const handleScroll = () => {
+      const currHeight = window.innerHeight + document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight;
+      if (currHeight + 1 >= scrollHeight && !loading) {
+        setPage(prev => prev + 1)
+      }
+    };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [loading]);
@@ -35,7 +35,6 @@ export const ImageGallery = () => {
         <Spinner />
       </SpinnerContainer>
     }
-
   </PageWrapper>
 
 }

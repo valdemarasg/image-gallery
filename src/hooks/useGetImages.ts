@@ -18,22 +18,22 @@ export function useGetImages(page: number) {
                 const data = await response.json();
                 const newPhotos: Photo[] = data?.photos?.photo ?? [];
                 if (newPhotos) {
-                    const filteredPhotos = checkForDuplicates(latestPhotos, newPhotos);
-                    setPhotos((currPhotos) => [...currPhotos, ...filteredPhotos]);
-                    setLatestPhotos(filteredPhotos);
+                    setLatestPhotos(newPhotos);
                 }
-
-                setLoading(false)
-
+                setLoading(false);
             } catch (error) {
                 console.log('failed to fetch photos', error);
             }
         }
-        if (!loading) {
-            setLoading(true);
-            fetchPhotos();
-        }
+
+        setLoading(true);
+        fetchPhotos();
+        return () => setLoading(false);
     }, [page]);
+
+    useEffect(() => {
+        setPhotos((currPhotos) => [...currPhotos, ...checkForDuplicates(currPhotos, latestPhotos)]);
+    }, [latestPhotos])
 
     return {
         photos, loading, latestPhotos

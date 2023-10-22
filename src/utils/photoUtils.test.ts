@@ -1,6 +1,5 @@
 import { expect, test, describe } from 'vitest';
 import { checkForDuplicates, checkForNewAuthors } from './photosUtils';
-import { Author } from '../types';
 import photos from './mocks/photos-1';
 import newPhotos from './mocks/photos-2';
 import expectedResultWithoutDuplicates from './mocks/photos-3';
@@ -15,17 +14,9 @@ describe('checkForDuplicates ', () => {
 })
 
 describe('checkForNewAuthors ', () => {
-    test('should returm new uthor list', () => {
-        const authorDetails: Author[] = [
-            {
-                id: '35389361@N06',
-                author: "author 1"
-            }, {
-                id: '144401380@N06',
-                author: "author 2"
-            }
-        ];
+    test('should returm new author list', () => {
+        const authorIds: string[] = ['35389361@N06', '144401380@N06'];
         const expectedResult = ['165133281@N05', '185888701@N02', '61137578@N00'];
-        expect(checkForNewAuthors(authorDetails, photos)).toEqual(expectedResult)
+        expect(checkForNewAuthors(authorIds, photos)).toEqual(expectedResult)
     })
 })
